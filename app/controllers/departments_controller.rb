@@ -1,4 +1,5 @@
 class DepartmentsController < ApplicationController
+
   def index
     @departments = Department.all.order({ :created_at => :desc })
 
@@ -7,17 +8,17 @@ class DepartmentsController < ApplicationController
 
   def show
     the_id = params.fetch("path_id")
-    @department = Department.where({:id => the_id })
+    @department = Department.where({ :id => the_id })
 
     render({ :template => "departments/show" })
   end
 
   def create
-    @department = Department.new
-    @department.name = params.fetch("query_name")
+    department = Department.new
+    department.name = params.fetch("query_name")
 
-    if @department.valid?
-      @department.save
+    if department.valid?
+      department.save
       redirect_to("/departments", { :notice => "Department created successfully." })
     else
       redirect_to("/departments", { :notice => "Department failed to create successfully." })
@@ -32,7 +33,7 @@ class DepartmentsController < ApplicationController
 
     if @department.valid?
       @department.save
-      redirect_to("/departments/#{@department.id}", { :notice => "Department updated successfully."} )
+      redirect_to("/departments/#{@department.id}", { :notice => "Department updated successfully." })
     else
       redirect_to("/departments/#{@department.id}", { :alert => "Department failed to update successfully." })
     end
@@ -44,6 +45,6 @@ class DepartmentsController < ApplicationController
 
     @department.destroy
 
-    redirect_to("/departments", { :notice => "Department deleted successfully."} )
+    redirect_to("/departments", { :notice => "Department deleted successfully." })
   end
 end
